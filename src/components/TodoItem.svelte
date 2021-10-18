@@ -1,5 +1,13 @@
 <script>
+	import { createEventDispatcher } from "svelte";
+	const dispatch = createEventDispatcher();
 	export let todo = {};
+	function deleteTodo() {
+		dispatch("delete-todo", todo.id);
+	}
+	function toggleComplete() {
+		dispatch("toggle-complete", todo.id);
+	}
 </script>
 
 <div class="todo-item">
@@ -8,17 +16,11 @@
 			type="checkbox"
 			class="checkbox"
 			checked={todo.completed ? true : false}
-			on:change={() => {
-				console.log("toggle-complete");
-			}}
+			on:change={toggleComplete}
 		/>
 		<p class={todo.completed ? "completed" : ""}>{todo.task}</p>
 	</div>
-	<button
-		on:click={() => {
-			console.log("delete");
-		}}>X</button
-	>
+	<button on:click={deleteTodo}>X</button>
 </div>
 
 <style>
@@ -41,8 +43,8 @@
 	}
 	.completed {
 		text-decoration: line-through;
-		color: #b0bec5;
-		text-decoration-color: #b0bec5;
+		color: #b3e5fc;
+		text-decoration-color: #b3e5fc;
 	}
 	button {
 		border: none;

@@ -1,6 +1,7 @@
 <script>
 	import TodoForm from "./components/TodoForm.svelte";
 	import TodoList from "./components/TodoList.svelte";
+	import { v4 as uuid } from "uuid";
 	let todos = [
 		{
 			id: 1,
@@ -13,12 +14,40 @@
 			completed: true,
 		},
 	];
+	function addInTodos(e) {
+		todos = [
+			...todos,
+			{
+				id: uuid(),
+				task: e.detail,
+				completed: false,
+			},
+		];
+	}
+	function deleteFromTodos(e) {
+		todos = todos.filter((todo) => todo.id !== e.detail);
+	}
+	function changeTodoState(e) {
+		todos = todos.map((todo) => {
+			if (todo.id === e.detail) {
+				return {
+					...todo,
+					completed: !todo.completed,
+				};
+			}
+			return todo;
+		});
+	}
 </script>
 
 <main>
 	<h2>TO DO LIST</h2>
-	<TodoForm {todos} />
-	<TodoList {todos} />
+	<TodoForm on:add-todo={addInTodos} />
+	<TodoList
+		{todos}
+		on:delete-todo={deleteFromTodos}
+		on:toggle-complete={changeTodoState}
+	/>
 </main>
 
 <style>

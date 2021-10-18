@@ -5,7 +5,7 @@
 
 <div class="todolist-container">
 	{#each todos as todo (todo.id)}
-		<TodoItem {todo} />
+		<TodoItem {todo} on:delete-todo on:toggle-complete />
 	{/each}
 </div>
 
