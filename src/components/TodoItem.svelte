@@ -1,5 +1,6 @@
 <script>
 	import { createEventDispatcher } from "svelte";
+	import { scale, fade } from "svelte/transition";
 	const dispatch = createEventDispatcher();
 	export let todo = {};
 	function deleteTodo() {
@@ -10,7 +11,7 @@
 	}
 </script>
 
-<div class="todo-item">
+<div class="todo-item" in:scale out:fade={{ duration: 500 }}>
 	<div>
 		<input
 			type="checkbox"
@@ -62,10 +63,10 @@
 		height: 15px;
 		border-radius: 50%;
 		font-weight: 700;
-		color: #ef5350;
-		background: white;
+		color: #191933;
+		background: #fff;
 	}
 	.checkbox:checked {
-		background-color: turquoise;
+		background-color: #b3e5fc;
 	}
 </style>
