@@ -1,11 +1,13 @@
 <script>
+	import TodoItem from "./TodoItem.svelte";
 	export let todos = [];
 </script>
 
-<main>
-	<h2>TodoList</h2>
-	<p>{todos[0].task}</p>
-</main>
+<div class="todolist-container">
+	{#each todos as todo (todo.id)}
+		<TodoItem {todo} />
+	{/each}
+</div>
 
 <style>
 </style>
