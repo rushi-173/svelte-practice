@@ -1,12 +1,17 @@
 <script>
-	import { createEventDispatcher } from "svelte";
+	import { TodoListStore } from "../stores";
+	import { v4 as uuid } from "uuid";
 	let currTask = "";
-	const dispatch = createEventDispatcher();
 	function inputChangeHandler(e) {
 		currTask = e.target.value;
 	}
 	function addTodo() {
-		dispatch("add-todo", currTask);
+		const newTodo = {
+			id: uuid(),
+			task: currTask,
+			completed: false,
+		};
+		TodoListStore.update((todos) => [newTodo, ...todos]);
 		currTask = "";
 	}
 </script>

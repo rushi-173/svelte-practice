@@ -1,13 +1,24 @@
 <script>
-	import { createEventDispatcher } from "svelte";
 	import { scale, fade } from "svelte/transition";
-	const dispatch = createEventDispatcher();
+	import { TodoListStore } from "../stores";
 	export let todo = {};
 	function deleteTodo() {
-		dispatch("delete-todo", todo.id);
+		TodoListStore.update((todos) =>
+			todos.filter((item) => item.id !== todo.id)
+		);
 	}
 	function toggleComplete() {
-		dispatch("toggle-complete", todo.id);
+		TodoListStore.update((todos) =>
+			todos.map((item) => {
+				if (item.id === todo.id) {
+					return {
+						...item,
+						completed: !item.completed,
+					};
+				}
+				return item;
+			})
+		);
 	}
 </script>
 
